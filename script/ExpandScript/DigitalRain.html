@@ -1,0 +1,50 @@
+<canvas id="canvas" style="background:black" width="620" height="340"></canvas>
+<style type="text/css">
+body{margin: 0; padding: 0; overflow: hidden;}
+</style>
+<script type="text/javascript">
+	
+	window.onload = function(){
+		var canvas = document.getElementById("canvas");
+		var context = canvas.getContext("2d");
+		var W = window.innerWidth;
+		var H = window.innerHeight;
+		canvas.width = W;
+		canvas.height = H;
+		var fontSize = 15;
+		var colunms = Math.floor(W /fontSize);	
+		var drops = [];
+		for(var i=0;i<colunms;i++){
+			drops.push(0);
+		}
+
+		var str ="01abcdefghijklmnopqurstuvwxyz";
+		function draw(){
+			context.fillStyle = "rgba(0,0,0,0.05)";
+			context.fillRect(0,0,W,H);
+			context.font = fontSize + 'px arial';
+			context.fillStyle ="green";
+			for(var i=0;i<colunms;i++){
+				var index = Math.floor(Math.random() * str.length);
+				var x = i*fontSize;
+				var y = drops[i] *fontSize;
+				context.fillText(str[index],x,y);
+				if(y >= canvas.height && Math.random() > 0.92){
+					drops[i] = 0;
+				}
+				drops[i]++;
+			}
+		};
+
+		function randColor(){
+			var r = Math.floor(Math.random() * 256);
+			var g = Math.floor(Math.random() * 256);
+			var b = Math.floor(Math.random() * 256);
+			return "rgb("+r+","+g+","+b+")";
+		}
+
+		draw();
+		setInterval(draw,32);
+	};
+
+</script>
